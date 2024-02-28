@@ -21,6 +21,14 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    static int marker = new Object().hashCode();
+
+    @GetMapping("/test")
+    public String test() {
+        System.out.println("Order controller test: " + marker);
+        return String.valueOf(marker);
+    }
+
     @PostMapping("/testorder")
     public long newOrderTest() {
 

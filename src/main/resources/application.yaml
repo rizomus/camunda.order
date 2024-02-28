@@ -3,17 +3,13 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order_schema
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
-
 
   jpa:
     hibernate:
       ddl-auto: create
 
     show-sql: true
-
-    properties:
-      hibernate.default_schema: order_schema
