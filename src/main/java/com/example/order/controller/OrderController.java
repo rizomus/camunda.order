@@ -37,8 +37,9 @@ public class OrderController {
         products.add(new Product(222L, "Ball"));
         products.add(new Product(333L, "Book"));
 
-        OrderDto dto = orderService.placingOrder(1L,
-                "TestPerson",
+        OrderDto dto = orderService.placingOrder(
+                1L,
+                "Lenin",
                 products,
                 true,
                 OrderStatus.NEW
@@ -50,6 +51,8 @@ public class OrderController {
     public long newOrder(@RequestBody OrderDto orderDto) {
 
         System.out.println(orderDto.productList());
+        System.out.println(orderDto.productList().getClass());
+        System.out.println(orderDto.productList().get(0).getClass());
 
 
         OrderDto dto = orderService.placingOrder(

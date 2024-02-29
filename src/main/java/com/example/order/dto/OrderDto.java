@@ -3,6 +3,7 @@ package com.example.order.dto;
 import com.example.order.entity.OrderStatus;
 import com.example.order.entity.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record OrderDto(
@@ -11,6 +12,7 @@ public record OrderDto(
         String ownerName,
         List<Product> productList,
         boolean prepayment,
+
         OrderStatus status
 ) {
 }

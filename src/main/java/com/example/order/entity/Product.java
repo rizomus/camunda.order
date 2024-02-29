@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,4 +29,8 @@ public class Product {
         this.article = article;
         this.description = description;
     }
+
+//    public static List<Product> getProductList(List<Product> prod) {
+//
+//    }
 }
