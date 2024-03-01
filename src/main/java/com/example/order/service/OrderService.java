@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class OrderService {
                                  String ownerName,
                                  List<Product> productList,
                                  boolean prepayment,
+                                 LocalDateTime date,
                                  OrderStatus status) {
 
         Order order = Order.builder()
@@ -39,6 +41,7 @@ public class OrderService {
                 .ownerName(ownerName)
                 .products(productList)
                 .prepayment(prepayment)
+                .date(date)
                 .status(status)
                 .build();
 

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,15 +34,16 @@ public class OrderController {
     public long newOrderTest() {
 
         ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(111L, "Cup"));
-        products.add(new Product(222L, "Ball"));
-        products.add(new Product(333L, "Book"));
+        products.add(new Product(111L, "Cup", 1));
+        products.add(new Product(222L, "Ball", 2));
+        products.add(new Product(333L, "Book", 1));
 
         OrderDto dto = orderService.placingOrder(
                 1L,
                 "Lenin",
                 products,
                 true,
+                LocalDateTime.now(),
                 OrderStatus.NEW
         );
         return dto.id();
@@ -50,16 +52,12 @@ public class OrderController {
     @PostMapping("/new")
     public long newOrder(@RequestBody OrderDto orderDto) {
 
-        System.out.println(orderDto.productList());
-        System.out.println(orderDto.productList().getClass());
-        System.out.println(orderDto.productList().get(0).getClass());
-
-
         OrderDto dto = orderService.placingOrder(
                 orderDto.ownerId(),
                 orderDto.ownerName(),
                 orderDto.productList(),
                 orderDto.prepayment(),
+                LocalDateTime.now(),
                 OrderStatus.NEW
         );
         return dto.id();

@@ -22,15 +22,12 @@ public class Product {
     private Long id;
 
     private Long article;
-
     private String description;
+    private int count;
 
-    public Product(Long article, String description) {
+    public Product(Long article, String description, int count) {
         this.article = article;
         this.description = description;
+        this.count = count;
     }
-
-//    public static List<Product> getProductList(List<Product> prod) {
-//
-//    }
 }

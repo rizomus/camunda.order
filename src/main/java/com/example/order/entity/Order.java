@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,14 @@ public class Order {
 
     private boolean prepayment;
 
+    private LocalDateTime date;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+
     public OrderDto getDto() {
-        return new OrderDto(id, ownerId, ownerName, products, prepayment, status);
+        return new OrderDto(id, ownerId, ownerName, products, prepayment, date, status);
     }
 
 }
