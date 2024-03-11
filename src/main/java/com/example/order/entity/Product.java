@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,11 +21,11 @@ public class Product {
 
     private Long article;
     private String description;
-    private int count;
+    private int amount;
 
-    public Product(Long article, String description, int count) {
+    public Product(Long article, String description, int amount) {
         this.article = article;
         this.description = description;
-        this.count = count;
+        this.amount = amount;
     }
 }

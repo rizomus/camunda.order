@@ -4,14 +4,19 @@ import com.example.order.dto.OrderDto;
 import com.example.order.entity.OrderStatus;
 import com.example.order.entity.Product;
 import com.example.order.service.OrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -30,7 +35,7 @@ public class OrderController {
         return String.valueOf(marker);
     }
 
-    @PostMapping("/testorder")
+    @PostMapping("/test-order")
     public long newOrderTest() {
 
         ArrayList<Product> products = new ArrayList<>();
@@ -39,18 +44,18 @@ public class OrderController {
         products.add(new Product(333L, "Book", 1));
 
         OrderDto dto = orderService.placingOrder(
-                1L,
+                1005L,
                 "Lenin",
                 products,
                 true,
                 LocalDateTime.now(),
                 OrderStatus.NEW
         );
-        return dto.id();
+        return dto.orderId();
     }
 
     @PostMapping("/new")
-    public long newOrder(@RequestBody OrderDto orderDto) {
+    public OrderDto newOrder(@RequestBody OrderDto orderDto) {
 
         OrderDto dto = orderService.placingOrder(
                 orderDto.ownerId(),
@@ -60,15 +65,19 @@ public class OrderController {
                 LocalDateTime.now(),
                 OrderStatus.NEW
         );
-        return dto.id();
+        return dto;
     }
 
     @GetMapping("/{id}")
-    public OrderDto getOrder(@PathVariable long id) {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable long id) {
 
-        OrderDto dto = orderService.getOrder(id);
-
-        return dto;
+        OrderDto dto = null;
+        try {
+            dto = orderService.getOrder(id);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/set-order-status")
@@ -81,10 +90,10 @@ public class OrderController {
             id = Long.valueOf(request.get("id"));
             newStatus = request.get("newStatus");
             if (id == null || newStatus == null) {
-                return new ResponseEntity<String>("The request body must contain the fields 'id' and 'newStatus'", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<String>("The request body must contain the fields 'orderId' and 'newStatus'", HttpStatus.BAD_REQUEST);
             }
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<String>("The request body must contain the fields 'id' and 'newStatus'", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("The request body must contain the fields 'orderId' and 'newStatus'", HttpStatus.BAD_REQUEST);
         }
         try {
             orderService.setNewStatus(id, OrderStatus.valueOf(newStatus));

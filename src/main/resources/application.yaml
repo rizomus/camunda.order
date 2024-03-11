@@ -1,11 +1,11 @@
 server:
-  port: 8001
+  port: 8011
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order_schema
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432}/${DATABASE_NAME:postgres}?currentSchema=${DATABASE_SCHEMA:public}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:

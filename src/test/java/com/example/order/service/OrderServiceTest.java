@@ -23,6 +23,6 @@
 //                true,
 //                OrderStatus.NEW
 //        );
-//        assertNotNull(dto.id());
+//        assertNotNull(dto.orderId());
 //    }
 //}
