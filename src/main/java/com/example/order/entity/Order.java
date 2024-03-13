@@ -1,14 +1,22 @@
 package com.example.order.entity;
 
 import com.example.order.dto.OrderDto;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,6 +41,9 @@ public class Order {
 
     private boolean prepayment;
 
+
+    private String marketplace;
+
     private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
@@ -40,7 +51,7 @@ public class Order {
 
 
     public OrderDto getDto() {
-        return new OrderDto(id, ownerId, ownerName, products, prepayment, date, status);
+        return new OrderDto(id, ownerId, ownerName, products, prepayment, marketplace, date, status);
     }
 
 }

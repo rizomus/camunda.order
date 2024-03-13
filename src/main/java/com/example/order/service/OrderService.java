@@ -32,6 +32,7 @@ public class OrderService {
                                  String ownerName,
                                  List<Product> productList,
                                  boolean prepayment,
+                                 String marketplace,
                                  LocalDateTime date,
                                  OrderStatus status) {
 
@@ -40,6 +41,7 @@ public class OrderService {
                 .ownerName(ownerName)
                 .products(productList)
                 .prepayment(prepayment)
+                .marketplace(marketplace)
                 .date(date)
                 .status(status)
                 .build();

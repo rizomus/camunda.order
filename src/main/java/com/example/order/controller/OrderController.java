@@ -5,6 +5,7 @@ import com.example.order.entity.OrderStatus;
 import com.example.order.entity.Product;
 import com.example.order.service.OrderService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController {
 
     @Autowired
@@ -48,6 +50,7 @@ public class OrderController {
                 "Lenin",
                 products,
                 true,
+                "Yandex",
                 LocalDateTime.now(),
                 OrderStatus.NEW
         );
@@ -62,6 +65,7 @@ public class OrderController {
                 orderDto.ownerName(),
                 orderDto.productList(),
                 orderDto.prepayment(),
+                orderDto.marketplace(),
                 LocalDateTime.now(),
                 OrderStatus.NEW
         );
@@ -90,10 +94,12 @@ public class OrderController {
             id = Long.valueOf(request.get("id"));
             newStatus = request.get("newStatus");
             if (id == null || newStatus == null) {
-                return new ResponseEntity<String>("The request body must contain the fields 'orderId' and 'newStatus'", HttpStatus.BAD_REQUEST);
+                log.debug("id || status == null");
+                return new ResponseEntity<String>("The request body must contain the fields 'orderId' and 'newStatus' (code 1)", HttpStatus.BAD_REQUEST);
             }
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<String>("The request body must contain the fields 'orderId' and 'newStatus'", HttpStatus.BAD_REQUEST);
+            log.debug("IllegalArgumentException");
+            return new ResponseEntity<String>("The request body must contain the fields 'orderId' and 'newStatus' (code 2)", HttpStatus.BAD_REQUEST);
         }
         try {
             orderService.setNewStatus(id, OrderStatus.valueOf(newStatus));

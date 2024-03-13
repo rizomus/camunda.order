@@ -13,6 +13,8 @@ public record OrderDto(
         List<Product> productList,
         boolean prepayment,
 
+        String marketplace,
+
         LocalDateTime date,
 
         OrderStatus status
